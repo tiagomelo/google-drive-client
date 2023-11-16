@@ -7,6 +7,7 @@ package googledrive
 import (
 	"context"
 	"os"
+	"path/filepath"
 
 	"github.com/pkg/errors"
 	"google.golang.org/api/drive/v3"
@@ -55,7 +56,7 @@ func (c *client) CreateFolder(folderName string, parentFolders ...string) (strin
 
 func (c *client) UploadFile(file *os.File, parentFolders ...string) (string, error) {
 	driveFile := &drive.File{
-		Name:    file.Name(),
+		Name:    filepath.Base(file.Name()),
 		Parents: parentFolders,
 	}
 	fileSrv := c.srv.Files()
