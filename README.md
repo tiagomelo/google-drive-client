@@ -1,8 +1,18 @@
-# google-drive-client
+# go-google-drive-client
 
-A simple Go client for interacting with Google Drive. This client provides an easy way to create folders and upload files to Google Drive using the Google Drive API.
+A simple Go client for interacting with Google Drive using the Google Drive API (v3).
 
-More functionalities will be added.
+## available operations
+
+- create folder
+- upload file
+- update file
+- download file
+- get file by id
+- delete file
+- set permissions (for user, group, domain or to anyone)
+
+It is important to mention that for GCP everything is a _file_, be it a regular file or a folder (which is called a _drive_). So whenever you see a _fileId_ param, it can be either a regular file or a folder.
 
 ## setup
 
@@ -20,54 +30,24 @@ Before using this client, you need to set up a Google Cloud Project and enable t
 
 For more detailed instructions, see the [Google Drive API documentation](https://developers.google.com/drive/api/v3/quickstart/go).
 
-## example
+## examples
 
-Here's a basic example of how to use this client:
-
-```
-package main
-
-import (
-    "context"
-    "fmt"
-    "os"
-
-    "github.com/tiagomelo/google-drive-client/googledrive"
-)
-
-func main() {
-    ctx := context.Background()
-    client, err := googledrive.New(ctx, credsFilePath)
-    if err != nil {
-        fmt.Println(err)
-        os.Exit(1)
-    }
-    const parentFolderId = `1LTtYxqYUMoA1IzHmlx_RMVdkWgtskMxO`
-    folder, err := client.CreateFolder("test folder", parentFolderId)
-    if err != nil {
-        fmt.Println(err)
-        os.Exit(1)
-    }
-    fmt.Printf("folder.Id: %v\n", folder)
-
-    file, err := os.Open("test.txt")
-    if err != nil {
-        fmt.Println(err)
-        os.Exit(1)
-    }
-    defer file.Close()
-
-    uploadedFile, err := client.UploadFile(file, folder)
-    if err != nil {
-        fmt.Println(err)
-        os.Exit(1)
-    }
-    fmt.Printf("uploadedFile: %v\n", uploadedFile)
-}
-```
+- [create folder](examples/create_folder/create_folder.go)
+- [upload file](examples/upload_file/upload_file.go)
+- [update file](examples/update_file/update_file.go)
+- [download file](examples/download_file/download_file.go)
+- [get file by id](examples/get_file_by_id/get_file_by_id.go)
+- [delete file](examples/delete_folder/delete_folder.go)
+- [set permissions (for user, group, domain or to anyone)](examples/assign_role/assign_role.go)
 
 ## unit tests
 
 ```
 make test
+```
+
+## unit tests coverage
+
+```
+make coverage
 ```
