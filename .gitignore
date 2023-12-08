@@ -1,2 +1,2 @@
-TODO
-creds/*.json
+coverage.out
+*.json

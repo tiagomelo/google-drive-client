@@ -8,3 +8,8 @@ help:
 ## test: runs unit tests
 test:
 	@ go test -v ./... -count=1
+
+.PHONY: coverage
+## coverage: run unit tests and generate coverage report in html format
+coverage:
+	@ go test -coverprofile=coverage.out ./...  && go tool cover -html=coverage.out
